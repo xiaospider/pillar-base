@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "express": "*",
-    "express-http-proxy": "*"
+    "http-proxy-middleware": "*"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
