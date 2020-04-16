@@ -8,11 +8,8 @@
     "npm": "1.2.x"
   },
   "dependencies": {
-    "config-multipaas": "^0.2.2",
-    "router": "^1.1.4",
-    "send": "^0.13.2",
-    "serve-static": "^1.10.2",
-    "finalhandler": "^0.4.1"
+    "express": "*",
+    "express-http-proxy": "*"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

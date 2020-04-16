@@ -1,36 +1,13 @@
-var cc       = require('config-multipaas'),
-    finalhandler= require('finalhandler'),
-    http     = require("http"),
-    Router       = require('router'),
-    fs = require('fs'),
-    serveStatic       = require("serve-static");
+var express = require('express');
+var app = express();
 
-var config   = cc();
-var app      = Router()
+// Listen
 
-// Serve up public/ftp folder 
-app.use(serveStatic('static'))
+var proxy = require('express-http-proxy');
 
-// Routes
-app.get("/status", function (req, res) {
-  res.statusCode = 200
-  res.setHeader('Content-Type', 'application/json; charset=utf-8')
-  res.end("{status: 'ok'}\n")
-})
+app.use(express.static('public'));
 
-app.get("/", function (req, res) {
-  var index = fs.readFileSync(__dirname + '/index.html')
-  res.statusCode = 200
-  res.setHeader('Content-Type', 'text/html; charset=utf-8')
-  res.end(index.toString())
-})
+app.use('/api', proxy('http://ibmcloudappmgmt-ibm-cem-cem-users.kube-system.svc:6002'))
 
-// Create server 
-var server = http.createServer(function(req, res){
-  var done = finalhandler(req, res)
-  app(req, res, done)
-})
-
-server.listen(config.get('PORT'), config.get('IP'), function () {
-  console.log( "Listening on " + config.get('IP') + ", port " + config.get('PORT') )
-});
+app.listen(3001);
+console.log('Listening on localhost:'+ 3001);
